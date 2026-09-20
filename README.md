@@ -85,3 +85,29 @@ See [docs/DEMO_RUNBOOK.md](docs/DEMO_RUNBOOK.md) for the operator flow and expec
 - `tests/` — Automated test suite
 - `scripts/` — Utility scripts and demo startup
 - `docs/` — Project specifications and runbooks# UniTrust
+
+
+## Cài đặt và chạy
+
+Yêu cầu: Git, Python 3.13, Internet (lần đầu, để tải thư viện và model).
+
+### Ubuntu / Linux
+
+```bash
+git clone <URL-repo>
+cd <thư-mục-repo>
+python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements.txt
+
+sudo apt install -y tesseract-ocr tesseract-ocr-vie     # tùy chọn: đọc chữ từ ảnh
+python scripts/seed_demo_db.py                           # tạo unitrust.db demo (10 thông báo)
+python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('intfloat/multilingual-e5-small')"
+
+python scripts/preflight_demo.py
+python scripts/start_demo.py
+```
+
+Mở http://127.0.0.1:8501. Nhấn Ctrl+C một lần để dừng.
